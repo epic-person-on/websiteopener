@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link Manager</title>
+    <title>Simple Link Manager</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -89,7 +89,7 @@
                 const listItem = document.createElement('li');
                 const linkElement = document.createElement('a');
                 const deleteButton = document.createElement('button');
-                linkElement.href = "https://" + link;
+                linkElement.href = link;
                 linkElement.textContent = link;
                 linkElement.target = '_blank';
                 deleteButton.textContent = 'Delete';
