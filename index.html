@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+        }
+        main {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+        li a {
+            text-decoration: none;
+            color: #007BFF;
+            word-break: break-all;
+        }
+        button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Simple Link Manager</h1>
+    </header>
+    <main>
+        <input type="text" id="linkInput" placeholder="Enter a link">
+        <button onclick="addLink()">Add Link</button>
+        <ul id="linkList"></ul>
+    </main>
+
+    <script>
+        // Load saved links from localStorage
+        const savedLinks = JSON.parse(localStorage.getItem('links')) || [];
+
+        // Function to add a new link to the list
+        function addLink() {
+            const linkInput = document.getElementById('linkInput');
+            const link = linkInput.value.trim();
+            if (link) {
+                savedLinks.push(link);
+                localStorage.setItem('links', JSON.stringify(savedLinks));
+                renderLinks();
+                linkInput.value = '';
+            }
+        }
+
+        // Function to delete a link from the list
+        function deleteLink(index) {
+            savedLinks.splice(index, 1);
+            localStorage.setItem('links', JSON.stringify(savedLinks));
+            renderLinks();
+        }
+
+        // Function to render the list of links
+        function renderLinks() {
+            const linkList = document.getElementById('linkList');
+            linkList.innerHTML = '';
+            savedLinks.forEach((link, index) => {
+                const listItem = document.createElement('li');
+                const linkElement = document.createElement('a');
+                const deleteButton = document.createElement('button');
+                linkElement.href = link;
+                linkElement.textContent = link;
+                linkElement.target = '_blank';
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = () => deleteLink(index);
+                listItem.appendChild(linkElement);
+                listItem.appendChild(deleteButton);
+                linkList.appendChild(listItem);
+            });
+        }
+
+        // Initial rendering
+        renderLinks();
+    </script>
+</body>
+</html>
